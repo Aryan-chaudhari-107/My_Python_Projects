@@ -15,7 +15,6 @@ logo = r"""
 |_____________________|
 """
 
-print(logo)
 
 def add(n1, n2):
     return n1 + n2
@@ -39,7 +38,7 @@ operations = {
 # print(operations["*"](10,2)) Output: 20
 
 def calculator():
-
+    print(logo)
     first_number = float(input("What is the first number?: "))
     game_over = True
 
@@ -59,7 +58,7 @@ def calculator():
             ans = first_number
         else:
             game_over = False
-            print("\n"* 20)
+            print("\n"* 200)
             calculator()
 
 calculator()
