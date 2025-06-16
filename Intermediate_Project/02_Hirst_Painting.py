@@ -1,3 +1,21 @@
+# import colorgram
+# colors_list = []
+#
+# colors = colorgram.extract('images.jpg', 30)
+#
+# for count in colors:
+#     r = count.rgb.r
+#     g = count.rgb.g
+#     b = count.rgb.b
+#     new_color = (r,g,b)
+#     colors_list.append(new_color)
+# print(colors_list)  
+''' I used Colorgram as mentioned earlier, but I made a few modifications 
+to the code before uploading it to GitHub to prevent other folders and images 
+from being included." '''
+
+
+
 import turtle as t
 import random
 
