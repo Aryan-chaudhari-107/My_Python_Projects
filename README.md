@@ -4,7 +4,7 @@ This repository contains all the projects I built while following the [100 Days 
 
 --------------------
 
-### 🚀 OVERVIEWF
+### 🚀 OVERVIEW
 
 ➡️ **70% of the projects** were built independently by me — from planning to implementation.  
 While I didn’t rely on the course material for these, I occasionally used **debugging tools**, **Stack Overflow**, and **Google** to troubleshoot issues — just like in real-world coding.
