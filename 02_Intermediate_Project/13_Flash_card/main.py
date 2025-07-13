@@ -2,15 +2,18 @@ from tkinter import *
 import pandas
 import random
 
-from numpy.ma.core import filled
-
 BACKGROUND_COLOR = "#B1DDC6"
-
+current_word = {}
+words_dict = {}
 
 # ---------------------------- CREATE DICT USING PANDAS CSV ------------------------------- #
-data = pandas.read_csv("data/hindi_words.csv")
-words_dict = data.to_dict(orient="records")
-current_word = {}
+try:
+    data = pandas.read_csv("data/words_to_learn.csv")
+except FileNotFoundError:
+    original_file_data = pandas.read_csv("data/hindi_words.csv")
+    words_dict = original_file_data.to_dict(orient="records")
+else:
+    words_dict = data.to_dict(orient="records")
 
 
 # ---------------------------- ACTIVATE BUTTON ------------------------------- #
@@ -30,6 +33,14 @@ def flip_card():
     canvas.itemconfig(card_title, text="English", fill="white")
     canvas.itemconfig(card_word, text=current_word["English"], fill="white")
 
+
+# ---------------------------- USER KNOW CARD FUNC------------------------------- #
+# whichever word user know will remove from words_dict and word_dict left with only unknown words
+def user_known():
+    words_dict.remove(current_word)
+    data = pandas.DataFrame(words_dict)
+    data.to_csv("data/words_to_learn.csv", index=False)
+    next_card()
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -57,7 +68,7 @@ wrong_button.grid(column=0, row=1)
 
 # RIGHT BUTTON
 right_image = PhotoImage(file="images/right.png")
-right_button = Button(image=right_image, highlightthickness=0, command=next_card)
+right_button = Button(image=right_image, highlightthickness=0, command=user_known)
 right_button.grid(column=1, row=1)
 
 next_card()
