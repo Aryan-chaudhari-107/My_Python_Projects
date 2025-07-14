@@ -1,17 +1,31 @@
 import smtplib
+import datetime as dt
+import random
 
-my_email = "aryan07chaudhari@gmail.com"
-password = "dvfx hoeg bwvx obpd"
-
-
-with smtplib.SMTP("smtp.gmail.com") as connection:
-    connection.starttls() # starttls make our connection secure
-    connection.login(user=my_email, password=password)
-    connection.sendmail(from_addr=my_email,
-                        to_addrs="bunnys.laptop.00@gmail.com",
-                        msg="Subject:hello\n\nJust trying to send email through python smtplib"
-    )
+MY_EMAIL = "aryan07chaudhari@gmail.com"
+PASSWORD = "dvfx hoeg bwvx obpd"
 
 
+# TO GET WEEK DAY
+now = dt.datetime.now()
+day_of_week = now.weekday()
 
+
+# SENDING MAIL IF DAY OF WEEK IS MONDAY
+if day_of_week == 0:
+    # TO GET RANDOM QUOTES
+    with open("quotes.txt") as file:
+        for text in file:
+            quotes_list = file.readlines()
+            random_quote = random.choice(quotes_list)
+
+    # FOR SEND MAIL
+    with smtplib.SMTP("smtp.gmail.com") as connection:
+        connection.starttls() # starttls make our connection secure
+        connection.login(user=MY_EMAIL, password=PASSWORD)
+        connection.sendmail(
+            from_addr=MY_EMAIL,
+            to_addrs="bunnys.laptop.00@gmail.com",
+            msg=f"Subject:Monday Motivation\n\n{random_quote}"
+        )
 
