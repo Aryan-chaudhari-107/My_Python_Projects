@@ -1,23 +1,25 @@
 import smtplib
-import datetime as dt
+from datetime import datetime
 import random
+import pandas
 
 MY_EMAIL = "aryan07chaudhari@gmail.com"
 PASSWORD = "dvfx hoeg bwvx obpd"
 
+today = (datetime.now().month, datetime.now().day)
 
-# TO GET WEEK DAY
-now = dt.datetime.now()
-day_of_week = now.weekday()
+# CREATED DICT USING PANDAS
+data = pandas.read_csv("birthdays.csv")
+birthdays_dict = {(data_row["month"], data_row["day"]): data_row
+                  for (index, data_row) in data.iterrows()}
 
-
-# SENDING MAIL IF DAY OF WEEK IS MONDAY
-if day_of_week == 0:
-    # TO GET RANDOM QUOTES
-    with open("quotes.txt") as file:
-        for text in file:
-            quotes_list = file.readlines()
-            random_quote = random.choice(quotes_list)
+# REPLACING BIRTHDAY PERSON NAME AND PICKING RANDOM LATTER FROM LETTER_TEMPLATES
+if today in birthdays_dict:
+    birthday_person = birthdays_dict[today]
+    file_path = f"letter_templates/letter_{random.randint(1,3)}.txt"
+    with open(file_path) as file:
+        contents = file.read()
+        contents = contents.replace("[NAME]", birthday_person["name"] )
 
     # FOR SEND MAIL
     with smtplib.SMTP("smtp.gmail.com") as connection:
@@ -25,7 +27,6 @@ if day_of_week == 0:
         connection.login(user=MY_EMAIL, password=PASSWORD)
         connection.sendmail(
             from_addr=MY_EMAIL,
-            to_addrs="bunnys.laptop.00@gmail.com",
-            msg=f"Subject:Monday Motivation\n\n{random_quote}"
-        )
-
+            to_addrs=birthday_person["email"],
+            msg=f"Subject:Happy Birthday!\n\n{contents}"
+            )
